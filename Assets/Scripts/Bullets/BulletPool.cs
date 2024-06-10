@@ -25,7 +25,7 @@ namespace CosmicCuration.Bullets
                 if (pooledBullet != null)
                 {
                     pooledBullet.isUsed = true;
-                    return pooledBullet.Bullet;
+                    return pooledBullet.bullet;
                 }
             }
             return CreateNewPooledBullet();
@@ -33,24 +33,24 @@ namespace CosmicCuration.Bullets
 
         public void ReturnToBulletPool(BulletController returnedBullet)
         {
-            PooledBullet pooledBullet = pooledBullets.Find(item => item.Bullet.Equals(returnedBullet));
+            PooledBullet pooledBullet = pooledBullets.Find(item => item.bullet.Equals(returnedBullet));
             pooledBullet.isUsed = false;
         }
 
         private BulletController CreateNewPooledBullet()
         {
-            PooledBullet pooledBullet = new PooledBullet();
-            pooledBullet.Bullet = new BulletController(bulletView, bulletScriptableObject);
-            pooledBullet.isUsed = true;
-            pooledBullets.Add(pooledBullet);
+            PooledBullet newBullet = new PooledBullet();
+            newBullet.bullet = new BulletController(bulletView, bulletScriptableObject);
+            newBullet.isUsed = true;
+            pooledBullets.Add(newBullet);
 
-            return pooledBullet.Bullet;
+            return newBullet.bullet;
         }
 
 
         public class PooledBullet
         {
-            public BulletController Bullet;
+            public BulletController bullet;
             public bool isUsed;
         }
     }
